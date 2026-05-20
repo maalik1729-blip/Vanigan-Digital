@@ -13,6 +13,12 @@ import { WINGS } from "@/data/wings";
 
 const membershipSearchSchema = z.object({
   wing: z.string().optional(),
+  name: z.string().optional(),
+  epic: z.string().optional(),
+  mobile: z.string().optional(),
+  district: z.string().optional(),
+  assembly: z.string().optional(),
+  address: z.string().optional(),
 });
 
 export const Route = createFileRoute("/membership")({
@@ -76,9 +82,19 @@ function Membership() {
   const [form, setForm] = useState(() => {
     const saved = localStorage.getItem("tnvs_form_data");
     const baseForm = {
-      name: "", mobile: "", email: "", district: "Chennai",
-      shop: "", type: "Retail", address: "", years: "", wing: search.wing || "",
+      name: search.name || "", 
+      mobile: search.mobile || "", 
+      email: "", 
+      district: search.district || "Chennai",
+      shop: "", 
+      type: "Retail", 
+      address: search.address || "", 
+      years: "", 
+      wing: search.wing || "",
     };
+    if (search.name || search.epic) {
+      return baseForm;
+    }
     if (saved) {
       try {
         const parsed = JSON.parse(saved);
@@ -100,10 +116,21 @@ function Membership() {
   const [useWebcam, setUseWebcam] = useState(false);
   const [webcamCapturing, setWebcamCapturing] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+  const [pin, setPin] = useState("");
 
-  const epicRef = useRef("TN-VS-" + Math.floor(10000000 + Math.random() * 89999999));
+  const epicRef = useRef(search.epic || "TN-VS-" + Math.floor(10000000 + Math.random() * 89999999));
   const epic = epicRef.current;
   const upd = (k: string, v: string) => setForm({ ...form, [k]: v });
+
+  useEffect(() => {
+    if (search.name && search.epic) {
+      toast.success(
+        language === "ta"
+          ? "தேர்தல் தரவுத்தளத்திலிருந்து விவரங்கள் வெற்றிகரமாக இறக்குமதி செய்யப்பட்டன!"
+          : "Details imported successfully from Voter Database!"
+      );
+    }
+  }, [search.name, search.epic, language]);
 
   // Persistence triggers
   useEffect(() => {
@@ -174,6 +201,14 @@ function Membership() {
 
   const handlePaySubmit = async () => {
     if (!validate()) return;
+    if (pin.length !== 4) {
+      toast.error(
+        language === "ta"
+          ? "தயவுசெய்து 4-இலக்க பாதுகாப்பு PIN ஐ உள்ளிடவும்"
+          : "Please create a valid 4-digit security PIN"
+      );
+      return;
+    }
     setSubmitting(true);
     await new Promise(r => setTimeout(r, 2000));
     setSubmitting(false);
@@ -639,6 +674,58 @@ function Membership() {
                         <div className="mt-1 text-xs md:text-sm text-slate-800 font-semibold break-all">{v}</div>
                       </div>
                     ))}
+                  </div>
+
+                  {/* 4-Digit Security PIN Validation Gate */}
+                  <div className="col-span-full border-t border-slate-100 pt-6 mt-4">
+                    <div className="max-w-xs mx-auto text-center space-y-3">
+                      <label className="block text-xs font-bold uppercase tracking-wider text-slate-500">
+                        {language === "ta" ? "பாதுகாப்பு PIN குறியீட்டை உருவாக்கவும் (4 இலக்கங்கள்)" : "Create Security PIN (4 Digits) *"}
+                      </label>
+                      <p className="text-[11px] text-slate-400 leading-normal font-tamil">
+                        {language === "ta"
+                          ? "உறுப்பினர் அட்டை மற்றும் தகவல்களைப் பாதுகாக்க 4-இலக்க PIN ஐ உள்ளிடவும்."
+                          : "Set a 4-digit PIN to secure your digital membership card."}
+                      </p>
+                      
+                      <div className="relative inline-block w-48 mt-2">
+                        {/* Invisible input overlay */}
+                        <input
+                          type="text"
+                          pattern="[0-9]*"
+                          maxLength={4}
+                          value={pin}
+                          onChange={(e) => {
+                            const val = e.target.value.replace(/\D/g, "");
+                            setPin(val);
+                          }}
+                          className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
+                          autoComplete="one-time-code"
+                        />
+                        
+                        {/* 4 beautiful custom slot boxes */}
+                        <div className="flex justify-between gap-3">
+                          {[0, 1, 2, 3].map((index) => {
+                            const char = pin[index] || "";
+                            const isFocused = pin.length === index;
+                            return (
+                              <div
+                                key={index}
+                                className={`w-10 h-12 rounded-xl border text-lg font-bold flex items-center justify-center transition-all duration-200 ${
+                                  isFocused
+                                    ? "border-primary ring-4 ring-primary/10 scale-105"
+                                    : char
+                                    ? "border-emerald-300 bg-emerald-50/30 text-emerald-900"
+                                    : "border-slate-200 bg-slate-50/50 text-slate-400"
+                                }`}
+                              >
+                                {char ? "•" : ""}
+                              </div>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    </div>
                   </div>
                   
                   <div className="col-span-full mt-4 bg-gradient-to-br from-emerald-50 to-teal-50 border border-emerald-100 rounded-2xl p-5 shadow-xs">
