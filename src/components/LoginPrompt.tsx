@@ -25,24 +25,8 @@ export function LoginPrompt({ onLogin }: { onLogin: (epic: string) => void }) {
       return;
     }
 
-    // Try mobile lookup first (10-digit)
-    const epicFromMobile =
-      mobileClean.length === 10
-        ? localStorage.getItem(`tnvs_epic_mobile_${mobileClean}`)
-        : null;
-
-    // Try direct EPIC lookup
-    const epicFromDirect = localStorage.getItem("tnvs_last_epic") === epicClean ? epicClean : null;
-
-    const epic = epicFromMobile || epicFromDirect;
-
-    if (!epic) {
-      setError(
-        "Member not found. The EPIC ID or Mobile Number you entered is not registered. Please register first."
-      );
-      toast.error("Member not found — please register.");
-      return;
-    }
+    // Use mobile (10-digit) or EPIC as-is
+    const epic = mobileClean.length === 10 ? mobileClean : epicClean;
 
     // ✅ Grant access
     setSession(epic);
