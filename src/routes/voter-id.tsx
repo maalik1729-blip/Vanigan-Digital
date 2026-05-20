@@ -804,7 +804,7 @@ function DetailRow({ icon, label, value, mono }: { icon: React.ReactNode; label:
       <span className="text-muted-foreground mt-0.5 shrink-0">{icon}</span>
       <div className="flex-1 min-w-0">
         <div className="text-xs text-muted-foreground uppercase tracking-wide">{label}</div>
-        <div className={`text-sm text-ink font-medium break-words mt-0.5 ${mono ? "font-mono tracking-wide" : ""}`}>{value}</div>
+        <div className={`text-sm text-ink font-medium wrap-break-word mt-0.5 ${mono ? "font-mono tracking-wide" : ""}`}>{value}</div>
       </div>
     </div>
   );

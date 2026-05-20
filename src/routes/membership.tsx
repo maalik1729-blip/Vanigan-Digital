@@ -563,7 +563,7 @@ function Membership() {
 
                     {/* Camera Modal Simulator overlay */}
                     {useWebcam && (
-                      <div className="fixed inset-0 z-[100] bg-slate-900/80 backdrop-blur-sm grid place-items-center p-4">
+                      <div className="fixed inset-0 z-100 bg-slate-900/80 backdrop-blur-sm grid place-items-center p-4">
                         <div className="bg-white rounded-2xl p-5 max-w-sm w-full text-center space-y-4 shadow-xl border border-slate-100">
                           <div className="flex justify-between items-center pb-2 border-b border-slate-100">
                             <span className="font-bold text-sm text-slate-800">Selfie Camera Scanner</span>
@@ -728,7 +728,7 @@ function Membership() {
                     </div>
                   </div>
                   
-                  <div className="col-span-full mt-4 bg-gradient-to-br from-emerald-50 to-teal-50 border border-emerald-100 rounded-2xl p-5 shadow-xs">
+                  <div className="col-span-full mt-4 bg-linear-to-br from-emerald-50 to-teal-50 border border-emerald-100 rounded-2xl p-5 shadow-xs">
                     <div className="flex justify-between items-baseline">
                       <span className="font-semibold text-emerald-800 text-sm">Annual Membership Fee</span>
                       <span className="font-display text-2xl font-bold text-emerald-950">₹ 500</span>
