@@ -32,7 +32,7 @@ const DEPARTMENTS = [
     nameTa: "விவசாயம் மற்றும் உணவுப் பிரிவுகள்",
     descEn: "Farming, organic agro-trading, milk farmers, and restaurant owners.",
     descTa: "விவசாயிகள், இயற்கை உற்பத்தி, பால் பண்ணை மற்றும் உணவக உரிமையாளர்கள்.",
-    wings: ["agriculture", "fishery", "nursery", "forest-timber", "food-restaurants", "fmcg-traders", "dairy-farmers"]
+    wings: ["agriculture", "restaurant-owners", "marine-business", "tribal-entrepreneurs", "distributors"]
   },
   {
     id: "industrial",
@@ -40,7 +40,7 @@ const DEPARTMENTS = [
     nameTa: "தொழில் மற்றும் வர்த்தகப் பிரிவுகள்",
     descEn: "Heavy industrial manufacturers, textile weavers, logistics, and real estate developers.",
     descTa: "உற்பத்தியாளர்கள், நெசவாளர்கள், தளவாடங்கள் மற்றும் கட்டுமானத் துறை சார்ந்தவர்கள்.",
-    wings: ["manufacturers", "real-estate", "infrastructure-builders", "electrical-hardware", "logistics-distributors", "export-import", "textile-weavers", "printing-packaging", "gold-jewellery"]
+    wings: ["manufacturers", "import-export", "weavers", "printing-press", "computer-mobile", "insurance-finance"]
   },
   {
     id: "public",
@@ -48,7 +48,7 @@ const DEPARTMENTS = [
     nameTa: "பொது மற்றும் சமூகப் பிரிவுகள்",
     descEn: "Retailers, handloom craftsmen, tourism agencies, and workers unions.",
     descTa: "சிறு சில்லறை வணிகர்கள், கைத்தறி கலைஞர்கள், சுற்றுலா முகவர்கள் மற்றும் தொழிலாளர்கள்.",
-    wings: ["labour", "differently-abled", "pharmacy-druggists", "education-academics", "tourism-travel", "sports-fitness", "handloom-handicrafts", "small-retailers", "hospitality-hoteliers"]
+    wings: ["labour", "differently-abled", "transgender-entrepreneurs", "pharmacists", "educators", "tourism-transport", "sports-business", "shop-owners", "street-vendors", "hotels-lodgings", "beauty-fitness", "central-govt-relations", "state-govt-relations", "cottage-industry", "digital-advertisers"]
   }
 ];
 
