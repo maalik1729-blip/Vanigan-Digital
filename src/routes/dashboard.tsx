@@ -5,7 +5,9 @@ import {
   Download, FileText, CreditCard, Bell, ChevronRight, ShieldCheck,
   LogOut, ArrowLeft, Copy, Award, Users, Smartphone, Play,
   CheckCircle2, UserPlus, Sparkles, Clock, AlertCircle,
+  Coins, Store, Rocket, ArrowRight, X
 } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 import { toast } from "sonner";
 import { getSession, clearSession } from "@/lib/session";
 import { LoginPrompt } from "@/components/LoginPrompt";
@@ -43,6 +45,25 @@ function Dashboard() {
   const { t, language } = useLanguage();
   const navigate = useNavigate();
   const [epicId, setEpicId] = useState<string | null>(() => getSession());
+
+  // Subsidized Loan Gated States
+  const [showLoanCategories, setShowLoanCategories] = useState(true);
+  const [isLoanModalOpen, setIsLoanModalOpen] = useState(false);
+  const [loanModalSubject, setLoanModalSubject] = useState("");
+  const [loanChatStep, setLoanChatStep] = useState(0);
+  const [loanInputs, setLoanInputs] = useState({ name: "", phone: "", amount: "" });
+
+  const openDashboardLoanModal = (type: "business" | "retail" | "young") => {
+    let subject = "";
+    if (type === "business") subject = t("வட்டியில்லா வணிகக் கடன் விண்ணப்பம்", "Interest-Free Business Loan Application");
+    else if (type === "retail") subject = t("சில்லறை வணிகர்கள் கடன் விண்ணப்பம்", "Retail Trader Loan Application");
+    else if (type === "young") subject = t("இளைய தொழில்முனைவோர் கடன் விண்ணப்பம்", "Young Entrepreneur Loan Application");
+    
+    setLoanModalSubject(subject);
+    setLoanChatStep(1);
+    setLoanInputs({ name: "Senthil Kumar N", phone: "+91 944 20 •• 44", amount: "" });
+    setIsLoanModalOpen(true);
+  };
 
   // Coordinator opt-in state
   const [isCoordinator, setIsCoordinator] = useState(
@@ -137,6 +158,73 @@ function Dashboard() {
         </div>
       </section>
 
+      <Section className="py-4">
+        {/* Full-size stationary Dribbble-style Premium Hero Promo Banner */}
+        <div className="relative overflow-hidden rounded-3xl bg-[#06225C] border border-blue-900/50 shadow-2xl flex flex-col justify-center max-w-7xl mx-auto p-8 md:p-12 min-h-[300px] select-none text-left bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-blue-950 via-[#06225C] to-slate-950">
+          
+          {/* Tagline Row */}
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-[2px] bg-amber-500 rounded-full"></div>
+            <span className="bg-blue-600/30 text-blue-400 border border-blue-500/20 text-[10px] md:text-xs font-black uppercase tracking-widest px-3 py-1 rounded-[4px] font-sans">
+              {t("உறுப்பினர் சிறப்பு சலுகை", "MEMBER SPECIAL OFFER")}
+            </span>
+          </div>
+
+          {/* Large Serif Headline with Highlighted Loan Keywords */}
+          <h1 className="mt-5 font-serif text-2xl md:text-4.5xl font-extrabold text-white leading-tight max-w-3xl">
+            {language === "ta" ? (
+              <>
+                வட்டியில்லா <span className="text-amber-400 drop-shadow-[0_2px_10px_rgba(251,191,36,0.3)] select-all">கடன்</span> பெற்று உங்கள் தொழிலை வளர்க்கவும்.
+              </>
+            ) : (
+              <>
+                Grow your business with 0% <span className="text-amber-400 drop-shadow-[0_2px_10px_rgba(251,191,36,0.3)] select-all">Interest Loans</span>.
+              </>
+            )}
+          </h1>
+
+          {/* Features Row */}
+          <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-3 text-xs md:text-sm text-slate-300 font-tamil font-semibold">
+            <span className="flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
+              {t("வட்டியில்லா கடன்", "No Interest (0% Vatti)")}
+            </span>
+            <span className="flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
+              {t("மிகவும் எளிய ஆவணங்கள்", "Only Simple Documents Needed")}
+            </span>
+            <span className="flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
+              {t("வங்கி கிளைகளில் உடனடி அனுமதி", "Quick Approval at Your Branch")}
+            </span>
+            <span className="flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
+              {t("₹25 லட்சம் வரை பெறலாம்", "Get up to ₹25 Lakhs")}
+            </span>
+          </div>
+
+          {/* CTA Action Button */}
+          <div className="mt-8">
+            <button
+              onClick={() => {
+                const section = document.getElementById("loan-categories-section");
+                if (section) {
+                  section.scrollIntoView({ behavior: "smooth" });
+                  toast.success(t("கீழே உள்ள கடன் பிரிவைத் தேர்ந்தெடுத்து விண்ணப்பிக்கவும்!", "Select a loan category below to apply!"));
+                }
+              }}
+              className="inline-flex items-center gap-2.5 px-6 py-3.5 rounded-[8px] text-sm font-bold text-white bg-blue-600 hover:bg-blue-500 hover:shadow-lg hover:shadow-blue-500/20 active:scale-[0.97] transition-all border border-blue-500/20 cursor-pointer"
+            >
+              <span>{t("கடனுக்கு விண்ணப்பிக்க →", "Apply for Loan Now →")}</span>
+            </button>
+          </div>
+
+          {/* Subtle Decorative Geometric Glowing Circles */}
+          <div className="absolute -top-12 -right-12 w-64 h-64 bg-blue-600/10 rounded-full blur-3xl pointer-events-none"></div>
+          <div className="absolute -bottom-16 -left-16 w-80 h-80 bg-emerald-500/5 rounded-full blur-3xl pointer-events-none"></div>
+        </div>
+      </Section>
+
       <Section className="py-10">
         <div className="grid lg:grid-cols-12 gap-6">
 
@@ -205,7 +293,7 @@ function Dashboard() {
             {/* App Download */}
             <div className="card-base p-5 md:p-6 space-y-4">
               <div className="flex items-center gap-2 pb-2 border-b border-slate-100">
-                <div className="w-8 h-8 rounded-xl bg-emerald-50 text-emerald-700 flex items-center justify-center">
+                <div className="w-8 h-8 rounded-xl bg-slate-100 text-primary flex items-center justify-center">
                   <Smartphone className="w-4 h-4" aria-hidden="true" />
                 </div>
                 <h3 className="font-display font-bold text-sm text-slate-800">
@@ -400,7 +488,7 @@ function Dashboard() {
                     </div>
                     <div className="w-full bg-slate-800 rounded-full h-2 overflow-hidden">
                       <div
-                        className="bg-gradient-to-r from-emerald-500 to-teal-500 h-2 rounded-full"
+                        className="bg-gradient-to-r from-primary to-[#06225C] h-2 rounded-full"
                         style={{ width: "0%" }}
                         role="progressbar"
                         aria-valuenow={0}
@@ -470,7 +558,311 @@ function Dashboard() {
 
           </div>
         </div>
+
+        {/* Full-width Loan Categories Row */}
+        <div id="loan-categories-section" className="mt-10 pt-10 border-t border-slate-200/80 animate-fade-in scroll-mt-6">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+            <div>
+              <h2 className="font-display text-lg md:text-xl font-bold text-slate-800 flex items-center gap-2">
+                <Coins className="w-5 h-5 text-primary animate-bounce" />
+                {t("கிடைக்கக்கூடிய கடன் திட்டங்கள்", "Available Loan Categories")}
+              </h2>
+              <p className="text-xs text-slate-500 font-tamil mt-1 leading-relaxed">
+                {t("உங்கள் வணிக வளர்ச்சிக்கு தகுதியான உத்தியோகபூர்வ கடன் உதவிகள்", "Official subsidized loan categories tailored for your business growth")}
+              </p>
+            </div>
+            <span className="text-xs bg-slate-100 text-slate-700 px-3 py-1 rounded-full font-bold border border-slate-200 uppercase tracking-wider self-start sm:self-center">
+              3 {t("சேவைகள்", "services")}
+            </span>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-6">
+            {/* Category 1: Interest-Free Business Loan */}
+            <div className="card-base card-interactive p-5 bg-white border border-slate-200 hover:border-primary/30 flex flex-col justify-between min-h-[220px]">
+              <div>
+                <div className="w-10 h-10 rounded-xl bg-sky-50 text-sky-700 flex items-center justify-center">
+                  <Coins className="w-5 h-5" />
+                </div>
+                <h3 className="font-display font-bold text-sm text-slate-800 mt-4 leading-tight">
+                  {t("வட்டியில்லா வணிகக் கடன்", "Interest-Free Business Loan")}
+                </h3>
+                <p className="text-xs text-slate-500 leading-relaxed font-tamil mt-2">
+                  {t(
+                    "Proprietorship, Freelancers, Pvt Ltd மற்றும் இறக்குமதி ஏற்றுமதி வணிகங்களுக்கு ₹25 லட்சம் வரை வட்டி இல்லா கடன்.",
+                    "Up to ₹25 lakh interest-free loan for Pvt Ltd, partnerships, import/export, proprietorships and freelancers."
+                  )}
+                </p>
+              </div>
+              <div className="mt-4 pt-3 border-t border-slate-100 flex justify-between items-center">
+                <span className="text-[10px] font-bold text-slate-700 bg-slate-100 px-2.5 py-0.5 rounded-full uppercase">
+                  {t("0% வட்டி", "0% Interest")}
+                </span>
+                <button
+                  onClick={() => openDashboardLoanModal("business")}
+                  className="inline-flex items-center gap-1 text-xs font-bold text-primary hover:gap-1.5 transition-all cursor-pointer"
+                >
+                  {t("விண்ணப்பம்", "Request / Apply")} <ArrowRight className="w-3.5 h-3.5 animate-pulse" />
+                </button>
+              </div>
+            </div>
+
+            {/* Category 2: Retail Trader Loan */}
+            <div className="card-base card-interactive p-5 bg-white border border-slate-200 hover:border-primary/30 flex flex-col justify-between min-h-[220px]">
+              <div>
+                <div className="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-700 flex items-center justify-center">
+                  <Store className="w-5 h-5" />
+                </div>
+                <h3 className="font-display font-bold text-sm text-slate-800 mt-4 leading-tight">
+                  {t("சில்லறை வணிகர்கள் கடன்", "Retail Trader Loan")}
+                </h3>
+                <p className="text-xs text-slate-500 leading-relaxed font-tamil mt-2">
+                  {t(
+                    "பதிவுசெய்யப்பட்ட சில்லறை வணிகர்களுக்கு குறைந்தபட்ச ஆவணங்களுடன் விரைவான கடன் அனுமதி.",
+                    "Fast loan approval for registered retail traders with minimal documentation."
+                  )}
+                </p>
+              </div>
+              <div className="mt-4 pt-3 border-t border-slate-100 flex justify-between items-center">
+                <span className="text-[10px] font-bold text-indigo-700 bg-indigo-50 px-2.5 py-0.5 rounded-full uppercase">
+                  {t("எளிய ஆவணங்கள்", "Easy Docs")}
+                </span>
+                <button
+                  onClick={() => openDashboardLoanModal("retail")}
+                  className="inline-flex items-center gap-1 text-xs font-bold text-primary hover:gap-1.5 transition-all cursor-pointer"
+                >
+                  {t("விண்ணப்பம்", "Request / Apply")} <ArrowRight className="w-3.5 h-3.5 animate-pulse" />
+                </button>
+              </div>
+            </div>
+
+            {/* Category 3: Young Entrepreneur Loan */}
+            <div className="card-base card-interactive p-5 bg-white border border-slate-200 hover:border-primary/30 flex flex-col justify-between min-h-[220px]">
+              <div>
+                <div className="w-10 h-10 rounded-xl bg-purple-50 text-purple-700 flex items-center justify-center">
+                  <Rocket className="w-5 h-5" />
+                </div>
+                <h3 className="font-display font-bold text-sm text-slate-800 mt-4 leading-tight">
+                  {t("இளைய தொழில்முனைவோர் கடன்", "Young Entrepreneur Loan")}
+                </h3>
+                <p className="text-xs text-slate-500 leading-relaxed font-tamil mt-2">
+                  {t(
+                    "40 வயதுக்குட்பட்ட இளைய தொழில்முனைவோருக்கு சிறப்பு மானியத்துடன் கூடிய நிதி உதவி திட்டம்.",
+                    "Special subsidised loan scheme for entrepreneurs under 40 years."
+                  )}
+                </p>
+              </div>
+              <div className="mt-4 pt-3 border-t border-slate-100 flex justify-between items-center">
+                <span className="text-[10px] font-bold text-purple-700 bg-purple-50 px-2.5 py-0.5 rounded-full uppercase">
+                  {t("மானியம் உண்டு", "Subsidized")}
+                </span>
+                <button
+                  onClick={() => openDashboardLoanModal("young")}
+                  className="inline-flex items-center gap-1 text-xs font-bold text-primary hover:gap-1.5 transition-all cursor-pointer"
+                >
+                  {t("விண்ணப்பம்", "Request / Apply")} <ArrowRight className="w-3.5 h-3.5 animate-pulse" />
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
       </Section>
+
+      {/* SEAMLESS CONVERSATIONAL LOAN MODAL */}
+      <AnimatePresence>
+        {isLoanModalOpen && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center px-4 overflow-y-auto bg-slate-900/40 backdrop-blur-xs">
+            {/* Backdrop */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setIsLoanModalOpen(false)}
+              className="fixed inset-0"
+            />
+
+            {/* Modal Dialog */}
+            <motion.div
+              initial={{ scale: 0.95, opacity: 0, y: 15 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.95, opacity: 0, y: 15 }}
+              className="relative w-full max-w-md bg-white rounded-2xl border border-slate-200/80 shadow-2xl overflow-hidden z-10"
+            >
+              {/* Header */}
+              <div className="bg-gradient-to-r from-[#06225C] to-slate-950 px-5 py-4 text-white flex justify-between items-center">
+                <div className="flex items-center gap-2">
+                  <Coins className="w-5 h-5 text-gold animate-bounce" />
+                  <div>
+                    <h3 className="font-display font-bold text-sm text-gold leading-none">
+                      {loanModalSubject}
+                    </h3>
+                    <p className="text-[10px] text-blue-300 font-tamil mt-1">
+                      {t("உறுப்பினர் எளிய கடன் போர்டல்", "Subsidized Fast-Track Scheme")}
+                    </p>
+                  </div>
+                </div>
+                <button
+                  onClick={() => setIsLoanModalOpen(false)}
+                  className="w-7 h-7 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition cursor-pointer"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              </div>
+
+              {/* Chat Body & Multi-Step Wizard */}
+              <div className="p-6 space-y-4 max-h-[380px] overflow-y-auto bg-slate-50/50">
+                {/* Chat Bot Intro */}
+                <div className="flex items-start gap-2.5">
+                  <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-primary font-bold text-xs shrink-0">
+                    AI
+                  </div>
+                  <div className="bg-white border border-slate-200/80 p-3 rounded-2xl rounded-tl-none shadow-xs text-xs text-slate-700 leading-relaxed font-tamil">
+                    {t(
+                      "வணக்கம்! நான் உங்கள் கடன் உதவியாளர். உங்களது கடன் விண்ணப்பத்தை எளிய 3 படிகளில் சமர்ப்பிக்கலாம். உங்கள் உறுப்பினர் விவரங்கள் ஏற்கனவே சரிபார்க்கப்பட்டன.",
+                      "Hello! I am your loan assistant. You can submit your application in 3 simple steps. Your verified member profile is linked."
+                    )}
+                  </div>
+                </div>
+
+                {/* Step 1: Request Amount Input */}
+                {loanChatStep >= 1 && (
+                  <div className="space-y-3">
+                    <div className="flex items-start gap-2.5">
+                      <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-primary font-bold text-xs shrink-0">
+                        AI
+                      </div>
+                      <div className="bg-white border border-slate-200/80 p-3 rounded-2xl rounded-tl-none shadow-xs text-xs text-slate-700 font-tamil">
+                        {t("உங்களுக்கு தேவையான கடன் தொகையைத் தேர்ந்தெடுக்கவும் அல்லது உள்ளிடவும்:", "Please choose or enter your desired loan amount:")}
+                      </div>
+                    </div>
+
+                    <div className="pl-10 grid grid-cols-3 gap-2">
+                      {["₹2,00,000", "₹5,00,000", "₹10,00,000"].map((amt) => (
+                        <button
+                          key={amt}
+                          type="button"
+                          onClick={() => {
+                            setLoanInputs({ ...loanInputs, amount: amt });
+                            setLoanChatStep(2);
+                          }}
+                          className={`py-2 px-1 text-center rounded-lg border text-xs font-bold transition cursor-pointer ${
+                            loanInputs.amount === amt
+                              ? "bg-primary border-primary text-white"
+                              : "bg-white border-slate-200 hover:bg-slate-50 text-slate-700"
+                          }`}
+                        >
+                          {amt}
+                        </button>
+                      ))}
+                    </div>
+
+                    <div className="pl-10 flex gap-2">
+                      <input
+                        type="text"
+                        placeholder={t("விருப்பத் தொகை (எ.கா. ₹15,00,000)", "Custom amount (e.g. ₹15,00,000)")}
+                        value={loanInputs.amount}
+                        onChange={(e) => setLoanInputs({ ...loanInputs, amount: e.target.value })}
+                        className="flex-1 bg-white border border-slate-200 rounded-lg px-3 py-1.5 text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:border-primary"
+                      />
+                      {loanInputs.amount.trim() !== "" && loanChatStep === 1 && (
+                        <button
+                          type="button"
+                          onClick={() => setLoanChatStep(2)}
+                          className="bg-primary hover:bg-primary/95 text-white px-3 py-1.5 rounded-lg text-xs font-bold transition cursor-pointer"
+                        >
+                          {t("அடுத்து", "Next")}
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                )}
+
+                {/* Step 2: Confirmation / Verification */}
+                {loanChatStep >= 2 && (
+                  <div className="space-y-3 animate-fade-in">
+                    {/* User Amount Bubble */}
+                    <div className="flex justify-end gap-2.5">
+                      <div className="bg-primary text-white p-3 rounded-2xl rounded-tr-none shadow-xs text-xs font-semibold">
+                        {loanInputs.amount}
+                      </div>
+                    </div>
+
+                    <div className="flex items-start gap-2.5">
+                      <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-primary font-bold text-xs shrink-0">
+                        AI
+                      </div>
+                      <div className="bg-white border border-slate-200/80 p-3 rounded-2xl rounded-tl-none shadow-xs text-xs text-slate-700 font-tamil leading-relaxed">
+                        {t(
+                          `அருமை! உங்களது பதிவு செய்யப்பட்ட பெயர்: செந்தில் குமார் N மற்றும் கைபேசி எண்: +91 944 20 •• 44. இந்த விவரங்களுடன் கடன் கோரிக்கையைச் சமர்ப்பிக்கலாமா?`,
+                          `Excellent! Your registered name is Senthil Kumar N and mobile: +91 944 20 •• 44. Shall we submit the request with these details?`
+                        )}
+                      </div>
+                    </div>
+
+                    <div className="pl-10 flex gap-2">
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setLoanChatStep(3);
+                          toast.success(
+                            language === "ta"
+                              ? "கடன் விண்ணப்பம் வெற்றிகரமாகச் சமர்ப்பிக்கப்பட்டது! 🚀"
+                              : "Loan request submitted successfully! 🚀"
+                          );
+                        }}
+                        className="bg-primary hover:bg-primary/90 text-white py-2 px-4 rounded-lg text-xs font-bold transition cursor-pointer flex-1"
+                      >
+                        {t("ஆம், சமர்ப்பி", "Yes, Submit Request")}
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setIsLoanModalOpen(false);
+                          toast.info(t("விண்ணப்பம் ரத்து செய்யப்பட்டது", "Application canceled"));
+                        }}
+                        className="bg-slate-200 hover:bg-slate-300 text-slate-700 py-2 px-3 rounded-lg text-xs font-bold transition cursor-pointer"
+                      >
+                        {t("ரத்து", "Cancel")}
+                      </button>
+                    </div>
+                  </div>
+                )}
+
+                {/* Step 3: Success Screen */}
+                {loanChatStep === 3 && (
+                  <div className="space-y-3 animate-fade-in">
+                    <div className="flex items-start gap-2.5">
+                      <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-primary font-bold text-xs shrink-0">
+                        AI
+                      </div>
+                      <div className="bg-emerald-50 border border-emerald-200/80 p-4 rounded-2xl rounded-tl-none shadow-xs text-xs text-emerald-800 font-tamil leading-relaxed space-y-2">
+                        <p className="font-bold flex items-center gap-1.5 text-emerald-900">
+                          <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+                          {t("விண்ணப்பம் பெறப்பட்டது!", "Request Received!")}
+                        </p>
+                        <p>
+                          {t(
+                            "உங்களது குறிப்பு எண்: #L-998083. எங்கள் கடன் அதிகாரி 24 மணி நேரத்திற்குள் உங்களைத் தொடர்புகொள்வார். நன்றி!",
+                            "Your reference number is #L-998083. Our loan officer will contact you within 24 hours. Thank you!"
+                          )}
+                        </p>
+                      </div>
+                    </div>
+                    <div className="pl-10">
+                      <button
+                        type="button"
+                        onClick={() => setIsLoanModalOpen(false)}
+                        className="w-full bg-slate-900 hover:bg-slate-800 text-white py-2 rounded-lg text-xs font-bold transition cursor-pointer"
+                      >
+                        {t("மூடு", "Close")}
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
