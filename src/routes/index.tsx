@@ -1,6 +1,4 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { motion, useScroll, useTransform, useSpring } from "framer-motion";
-import { useRef } from "react";
 import { Section, SectionLabel } from "@/components/Section";
 import templeLogo from "@/assets/temple-logo.png";
 import {
@@ -159,21 +157,10 @@ const HOW_IT_WORKS = [
 function Home() {
   const { language, t } = useLanguage();
 
-  // ── Parallax: scoped to the hero section, not the whole window ──────────
-  const heroRef = useRef<HTMLElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: heroRef,
-    offset: ["start start", "end start"],  // 0 = hero top at viewport top, 1 = hero bottom at viewport top
-  });
-  // Image moves up by 80px over the full hero scroll — slower than content = depth
-  const rawParallaxY = useTransform(scrollYProgress, [0, 1], [0, 80]);
-  // Spring-smooth the parallax so it doesn't stutter
-  const parallaxY = useSpring(rawParallaxY, { damping: 30, stiffness: 100, mass: 0.5 });
-
   return (
     <div>
       {/* HERO */}
-      <section ref={heroRef} className="relative overflow-hidden border-b border-border">
+      <section className="relative overflow-hidden border-b border-border">
 
         {/* ── Ambient background orbs — give the hero depth & warmth ───── */}
         <div aria-hidden="true" className="pointer-events-none">
@@ -191,12 +178,7 @@ function Home() {
 
         <div className="relative max-w-7xl mx-auto px-4 pt-14 pb-18 grid lg:grid-cols-12 gap-10 items-center">
 
-          <motion.div
-            initial={{ opacity: 0, y: 24, filter: "blur(8px)" }}
-            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-            transition={{ duration: 0.85, ease: [0.21, 0.47, 0.32, 0.98] }}
-            className="lg:col-span-7"
-          >
+          <div className="lg:col-span-7 animate-slide-up">
             <SectionLabel>
               {t("அரசு அங்கீகரிக்கப்பட்டது · பதிவு எண். 2012/TNVS", "Government Registered · Reg. No. 2012/TNVS")}
             </SectionLabel>
@@ -265,15 +247,9 @@ function Home() {
                 <a href="tel:04423456789" className="hover:text-primary transition">044-2345-6789</a>
               </span>
             </div>
-          </motion.div>
+          </div>
 
-          <motion.div
-            initial={{ opacity: 0, scale: 0.93, filter: "blur(6px)" }}
-            animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
-            transition={{ duration: 0.9, delay: 0.12, ease: [0.21, 0.47, 0.32, 0.98] }}
-            style={{ y: parallaxY }}
-            className="lg:col-span-5 flex items-center justify-center"
-          >
+          <div className="lg:col-span-5 flex items-center justify-center animate-fade-in">
             <img
               src={templeLogo}
               alt="Tamil Nadu Vanigargalin Sangamam emblem"
@@ -281,7 +257,7 @@ function Home() {
               width={400}
               height={400}
             />
-          </motion.div>
+          </div>
         </div>
       </section>
 

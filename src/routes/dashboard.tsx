@@ -163,7 +163,7 @@ function Dashboard() {
 
       <Section className="py-4">
         {/* Full-size stationary Dribbble-style Premium Hero Promo Banner */}
-        <div className="relative overflow-hidden rounded-3xl bg-[#06225C] border border-blue-900/50 shadow-2xl flex flex-col justify-center max-w-7xl mx-auto p-8 md:p-12 min-h-[300px] select-none text-left bg-[radial-gradient(ellipse_at_top_right,var(--tw-gradient-stops))] from-blue-950 via-[#06225C] to-slate-950">
+        <div className="relative overflow-hidden rounded-3xl bg-navy border border-blue-900/50 shadow-2xl flex flex-col justify-center max-w-7xl mx-auto p-8 md:p-12 min-h-[300px] select-none text-left bg-[radial-gradient(ellipse_at_top_right,var(--tw-gradient-stops))] from-blue-950 via-navy to-slate-950">
           
           {/* Tagline Row */}
           <div className="flex items-center gap-3">
@@ -491,7 +491,7 @@ function Dashboard() {
                     </div>
                     <div className="w-full bg-slate-800 rounded-full h-2 overflow-hidden">
                       <div
-                        className="bg-linear-to-r from-primary to-[#06225C] h-2 rounded-full"
+                        className="bg-linear-to-r from-primary to-navy h-2 rounded-full"
                         style={{ width: "0%" }}
                         role="progressbar"
                         aria-valuenow={0}
@@ -691,7 +691,7 @@ function Dashboard() {
               className="relative w-full max-w-md bg-white rounded-2xl border border-slate-200/80 shadow-2xl overflow-hidden z-10"
             >
               {/* Header */}
-              <div className="bg-linear-to-r from-[#06225C] to-slate-950 px-5 py-4 text-white flex justify-between items-center">
+              <div className="bg-linear-to-r from-navy to-slate-950 px-5 py-4 text-white flex justify-between items-center">
                 <div className="flex items-center gap-2">
                   <Coins className="w-5 h-5 text-gold animate-bounce" />
                   <div>
