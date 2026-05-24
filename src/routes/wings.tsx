@@ -229,7 +229,7 @@ function Wings() {
               </p>
 
               {/* Statistics Panel */}
-              <div className="mt-8 grid grid-cols-2 lg:grid-cols-4 gap-4">
+              <div className="mt-8 grid grid-cols-2 gap-4 max-w-md">
                 <div className="bg-slate-50 border border-slate-200 rounded-xl p-4 text-center shadow-xs">
                   <div className="text-xl md:text-2xl font-bold text-primary tabular-nums">{statsZonesCount}</div>
                   <div className="text-xxs uppercase tracking-wider text-slate-400 font-semibold mt-1">
@@ -240,20 +240,6 @@ function Wings() {
                   <div className="text-xl md:text-2xl font-bold text-primary tabular-nums">{statsDistrictsCount}</div>
                   <div className="text-xxs uppercase tracking-wider text-slate-400 font-semibold mt-1">
                     {t("உள்ளடக்கிய மாவட்டங்கள்", "Districts Covered")}
-                  </div>
-                </div>
-                <div className="bg-slate-50 border border-slate-200 rounded-xl p-4 text-center shadow-xs">
-                  <div className="text-xl md:text-2xl font-bold text-primary tabular-nums">{statsACCount}</div>
-                  <div className="text-xxs uppercase tracking-wider text-slate-400 font-semibold mt-1">
-                    {t("சட்டமன்ற தொகுதிகள்", "Assembly Constituencies")}
-                  </div>
-                </div>
-                <div className="bg-slate-50 border border-slate-200 rounded-xl p-4 text-center shadow-xs">
-                  <div className="text-xl md:text-2xl font-bold text-primary tabular-nums">
-                    {(statsVotersSum / 1000000).toFixed(2)}M
-                  </div>
-                  <div className="text-xxs uppercase tracking-wider text-slate-400 font-semibold mt-1">
-                    {t("மொத்த வாக்காளர்கள் கவரேஜ்", "Total Voters Represented")}
                   </div>
                 </div>
               </div>

@@ -34,6 +34,12 @@
   --color-ring: var(--ring);
   --color-parchment: var(--parchment);
   --color-ink: var(--ink);
+  --color-navy: var(--navy);
+  --color-navy-light: var(--navy-light);
+  --color-gold-light: var(--gold-light);
+  --color-surface-info: var(--info);
+  --color-border-info: var(--info-border);
+  --color-text-info: var(--info-foreground);
   --font-tamil: 'Noto Serif Tamil', 'Noto Sans Tamil', serif;
   --font-display: 'Fraunces', 'Noto Serif Tamil', serif;
   --font-body: 'Inter', 'Noto Sans Tamil', sans-serif;
@@ -99,6 +105,15 @@
   --gold:            oklch(0.78 0.12 85);
   --gold-foreground: oklch(0.14 0.020 252);
   --dot-color:       oklch(0.78 0.12 85 / 0.25);
+
+  --navy:            oklch(0.30 0.14 255);
+  --navy-light:      oklch(0.40 0.14 255);
+  --gold-light:      oklch(0.85 0.10 85);
+
+  /* Info / Demo Banner colors */
+  --info:            oklch(0.95 0.03 240);
+  --info-border:     oklch(0.85 0.08 240);
+  --info-foreground: oklch(0.30 0.12 245);
 
   --destructive:            oklch(0.55 0.21 28);
   --destructive-foreground: oklch(0.985 0 0);

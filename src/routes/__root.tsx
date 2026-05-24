@@ -6,11 +6,11 @@ import {
   HeadContent,
   Scripts,
   Link,
+  useLocation,
 } from "@tanstack/react-router";
 import appCss from "../styles.css?url";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
-import { LenisProvider } from "@/components/LenisProvider";
 import { Toaster } from "sonner";
 import { LanguageProvider } from "@/hooks/useLanguage";
 import { ThemeProvider } from "@/hooks/useTheme";
@@ -94,6 +94,7 @@ function RootComponent() {
 
 function RootInner() {
   const { language } = useLanguage();
+  const location = useLocation();
 
   useEffect(() => {
     if (typeof document !== "undefined") {
@@ -101,8 +102,12 @@ function RootInner() {
     }
   }, [language]);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
+
   return (
-    <LenisProvider>
+    <>
       {/* pt-[85px] offsets the fixed navbar (gov-stripe 3px + ticker ~32px + nav row ~50px) */}
       <div className="min-h-screen flex flex-col pt-[85px]">
         <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-3 focus:left-3 focus:z-100 focus:px-4 focus:py-2 focus:bg-primary focus:text-primary-foreground focus:rounded-md focus:text-sm focus:font-medium">
@@ -113,6 +118,6 @@ function RootInner() {
         <SiteFooter />
       </div>
       <Toaster position="bottom-right" richColors closeButton />
-    </LenisProvider>
+    </>
   );
 }
