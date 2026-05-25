@@ -16,6 +16,9 @@ export default defineConfig(({ command }) => {
           specifiers: ["server-only"],
         },
       },
+      server: {
+        preset: "vercel",
+      },
     }),
     react(),
   ];
