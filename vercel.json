@@ -1,25 +1,11 @@
 {
-  "functions": {
-    "api/server.js": {
-      "runtime": "edge"
-    }
-  },
-  "routes": [
+  "version": 2,
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist/client",
+  "rewrites": [
     {
-      "src": "/assets/(.*)",
-      "dest": "/client/assets/$1"
-    },
-    {
-      "src": "/_assets/(.*)",
-      "dest": "/client/_assets/$1"
-    },
-    {
-      "src": "/(favicon\\.ico|favicon\\.png|welcome_video\\.mp4)",
-      "dest": "/client/$1"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/api/server.js"
+      "source": "/(.*)",
+      "destination": "/index.html"
     }
   ]
 }
